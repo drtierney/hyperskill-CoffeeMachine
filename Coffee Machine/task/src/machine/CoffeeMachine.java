@@ -3,51 +3,82 @@ package machine;
 import java.util.Scanner;
 
 public class CoffeeMachine {
+
+    static int water = 1200;
+    static int milk = 540;
+    static int beans = 120;
+    static int cups = 9;
+    static int money = 550;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        //amount of each ingredient per one cup
-        int WATER = 200;
-        int MILK = 50;
-        int BEANS = 15;
-
-        System.out.print("Write how many ml of water the coffee machine has: ");
-        int waterLevel = scanner.nextInt();
-        System.out.print("Write how many ml of milk the coffee machine has: ");
-        int milkLevel = scanner.nextInt();
-        System.out.print("Write how many grams of coffee beans the coffee machine has: ");
-        int beanLevel = scanner.nextInt();
-        System.out.print("Write how many cups of coffee you will need: ");
-        int cupsNeed = scanner.nextInt();
-        int cupsWater = 0;
-        int cupsMilk = 0;
-        int cupsBeans = 0;
-
-        if(waterLevel > WATER){
-            cupsWater = waterLevel / WATER;
-            if(milkLevel > MILK){
-                cupsMilk = milkLevel / MILK;
+        summary();
+        String action = scanner.nextLine();
+        switch (action) {
+            case "buy": {
+                System.out.print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
+                int task = scanner.nextInt();
+                System.out.println();
+                switch (task) {
+                    case 1: {
+                        water -= 250;
+                        beans -= 16;
+                        cups--;
+                        money += 4;
+                        break;
+                    }
+                    case 2: {
+                        water -= 350;
+                        milk -= 75;
+                        beans -= 20;
+                        cups--;
+                        money += 7;
+                        break;
+                    }
+                    case 3: {
+                        water -= 200;
+                        milk -= 100;
+                        beans -= 12;
+                        cups--;
+                        money += 6;
+                        break;
+                    }
+                }
+                break;
             }
-            if(beanLevel > BEANS){
-                cupsBeans = beanLevel / BEANS;
+            case "fill": {
+                System.out.print("Write how many ml of water do you want to add: ");
+                int waterAdd = scanner.nextInt();
+                System.out.print("Write how many ml of milk do you want to add: ");
+                int milkAdd = scanner.nextInt();
+                System.out.print("Write how many grams of coffee beans do you want to add: ");
+                int beansAdd = scanner.nextInt();
+                System.out.print("Write how many disposable cups of coffee do you want to add: ");
+                int cupsAdd = scanner.nextInt();
+                water += waterAdd;
+                milk += milkAdd;
+                beans += beansAdd;
+                cups += cupsAdd;
+                break;
             }
+            case "take":{
+                System.out.println("I gave you $" + money);
+                money = 0;
+            }
+                break;
         }
+        summary();
+    }
 
-        int cupsMax = Math.min(Math.min(cupsWater, cupsMilk), cupsBeans);
-
-        if (cupsNeed > cupsMax){
-            System.out.println("No, I can make only " + cupsMax + " cup(s) of coffee");
-        }
-        else if (cupsNeed < cupsMax){
-            System.out.println("Yes, I can make that amount of coffee (and even "
-                                + (cupsMax - cupsNeed) + " more than that");
-        }
-        else {
-            System.out.println("Yes, I can make that amount of coffee");
-        }
-
-
-
-
+    static public void summary(){
+        System.out.println("The coffee machine has:");
+        System.out.println(water + " of water");
+        System.out.println(milk + " of milk");
+        System.out.println(beans + " of coffee beans");
+        System.out.println(cups + " of disposable cups");
+        System.out.println(money + " of money");
+        System.out.println();
+        System.out.print("Write action (buy, fill, take): ");
     }
 }
