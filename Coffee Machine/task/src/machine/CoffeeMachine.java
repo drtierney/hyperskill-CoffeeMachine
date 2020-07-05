@@ -14,30 +14,46 @@ public class CoffeeMachine {
 
     static Scanner scanner = new Scanner(System.in);
 
+    enum Status {
+        CHOOSING, BUYING, FILLING, TAKING, REMAINING, EXITING
+    }
+
+    static Status curStatus = Status.CHOOSING;
+
     public static void main(String[] args) {
 
 
         do {
+            System.out.println(curStatus);
             System.out.print("Write action (buy, fill, take, remaining, exit): ");
             String action = scanner.next();
             switch (action) {
                 case "buy":
+                    curStatus = Status.BUYING;
+                    System.out.println(curStatus);
                     buy();
                     break;
                 case "fill":
+                    curStatus = Status.FILLING;
+                    System.out.println(curStatus);
                     fill();
                     break;
                 case "take":
+                    curStatus = Status.TAKING;
+                    System.out.println(curStatus);
                     take();
                     break;
                 case "remaining":
+                    curStatus = Status.REMAINING;
+                    System.out.println(curStatus);
                     remaining();
                     break;
                 case "exit":
                     exit();
+                    System.out.println(curStatus);
                     break;
             }
-        } while (exit == false);
+        } while (curStatus != Status.EXITING);
 
 
     }
@@ -87,6 +103,7 @@ public class CoffeeMachine {
             }
 
         }
+        curStatus = Status.CHOOSING;
     }
 
     static void fill() {
@@ -108,12 +125,16 @@ public class CoffeeMachine {
         milk += milkAdd;
         beans += beansAdd;
         cups += cupsAdd;
+
+        curStatus = Status.CHOOSING;
     }
 
     static void take() {
         //System.out.println("take() called");
-        System.out.println("I gave you $" + money);
+        System.out.println("I gave you $" + money +"\n");
         money = 0;
+
+        curStatus = Status.CHOOSING;
     }
 
     static void remaining() {
@@ -125,19 +146,20 @@ public class CoffeeMachine {
         System.out.println(cups + " of disposable cups");
         System.out.println(money + " of money");
         System.out.println();
+
+        curStatus = Status.CHOOSING;
     }
 
     static void exit() {
         //System.out.println("exit() called");
-
-        exit = true;
+        curStatus = Status.EXITING;
     }
 
     static boolean canMakeCoffee(int waterNeed, int milkNeed, int beansNeed) {
         if (water >= waterNeed) {
             if (milk >= milkNeed) {
                 if (beans >= beansNeed) {
-                    System.out.println("I have enough resources, making you a coffee\n!");
+                    System.out.println("I have enough resources, making you a coffee!\n");
                     return true;
                 } else {
                     System.out.println("Sorry, not enough beans!");
