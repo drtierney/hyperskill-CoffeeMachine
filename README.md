@@ -2,7 +2,7 @@
 Write the software for a simulation of a real-world coffee machine.  
 https://hyperskill.org/projects/33
 
-<img src="https://github.com/drtierney/hyperskill-CoffeeMachine/blob/master/CoffeeMachine.gif" width="800" height="400" />  
+<img src="https://github.com/drtierney/hyperskill-CoffeeMachine/blob/main/CoffeeMachine.gif" width="800" height="400" />  
 
 ## Syntax
 ```
